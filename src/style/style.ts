@@ -912,6 +912,32 @@ class Style extends Evented {
         return this.getLayer(layer).getPaintProperty(name);
     }
 
+    setFeatureStates(target: {
+        source: string;
+        sourceLayer?: string;
+    }, states: any) {
+        this._checkLoaded();
+        const sourceId = target.source;
+        const sourceLayer = target.sourceLayer;
+        const sourceCache = this.sourceCaches[sourceId];
+
+        if (sourceCache === undefined) {
+            this.fire(new ErrorEvent(new Error(`The source '${sourceId}' does not exist in the map's style.`)));
+            return;
+        }
+        const sourceType = sourceCache.getSource().type;
+        if (sourceType === 'geojson' && sourceLayer) {
+            this.fire(new ErrorEvent(new Error('GeoJSON sources cannot have a sourceLayer parameter.')));
+            return;
+        }
+        if (sourceType === 'vector' && !sourceLayer) {
+            this.fire(new ErrorEvent(new Error('The sourceLayer parameter must be provided for vector source types.')));
+            return;
+        }
+
+        sourceCache.setFeatureStates(sourceLayer, states);
+    }
+
     setFeatureState(target: {
         source: string;
         sourceLayer?: string;

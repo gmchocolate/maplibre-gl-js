@@ -895,6 +895,11 @@ class SourceCache extends Evented {
      * Set the value of a particular state for a feature
      * @private
      */
+    setFeatureStates(sourceLayer: string, states: any) {
+        sourceLayer = sourceLayer || '_geojsonTileLayer';
+        this._state.updateStates(sourceLayer, states);
+    }
+
     setFeatureState(sourceLayer: string, featureId: number | string, state: any) {
         sourceLayer = sourceLayer || '_geojsonTileLayer';
         this._state.updateState(sourceLayer, featureId, state);
