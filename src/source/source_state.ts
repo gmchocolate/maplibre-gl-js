@@ -25,6 +25,10 @@ class SourceFeatureState {
         this.deletedStates = {};
     }
 
+    updateStates(sourceLayer: string, newStates: any) {
+        this.stateChanges[sourceLayer] = newStates;
+    }
+
     updateState(sourceLayer: string, featureId: number | string, newState: any) {
         const feature = String(featureId);
         this.stateChanges[sourceLayer] = this.stateChanges[sourceLayer] || {};
