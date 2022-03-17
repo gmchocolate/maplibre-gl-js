@@ -2216,6 +2216,14 @@ class Map extends Camera {
      *
      * @see [Create a hover effect](https://maplibre.org/maplibre-gl-js-docs/example/hover-styles/)
      */
+    setFeatureStates(feature: {
+        source: string;
+        sourceLayer?: string;
+    }, states: any) {
+        this.style.setFeatureStates(feature, states);
+        this._render(1);
+    }
+
     setFeatureState(feature: FeatureIdentifier, state: any) {
         this.style.setFeatureState(feature, state);
         return this._update();
