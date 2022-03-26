@@ -1,6 +1,7 @@
 import {extend} from '../util/util';
 import Tile from './tile';
 import type {FeatureState} from '../style-spec/expression';
+import {source} from "../style-spec/validate_style";
 
 export type FeatureStates = {[featureId: string]: FeatureState};
 export type LayerFeatureStates = {[layer: string]: FeatureStates};
@@ -26,6 +27,18 @@ class SourceFeatureState {
     }
 
     updateStates(sourceLayer: string, newStates: any) {
+        if(!(sourceLayer in this.stateChanges)){
+            this.stateChanges[sourceLayer] = {}
+        }else{
+            if(!(sourceLayer in this.deletedStates)){
+                this.deletedStates[sourceLayer] = {}
+            }
+            Object.keys(newStates).forEach(featID=>{
+                if(featID in this.stateChanges[sourceLayer]){
+                    this.deletedStates[sourceLayer][featID]=null
+                }
+            })
+        }
         this.stateChanges[sourceLayer] = newStates;
     }
 
