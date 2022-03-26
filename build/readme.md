@@ -11,6 +11,8 @@ This command will compile the css code and create the css file.
 `npm run build-prod` and `npm run build-dev`
 These commands will use rollup to bundle the code. This is where the magic happens and uses some files in this folder.
 
+`dts-bundle-generator -o dist/maplibre-gl.d.ts src/index.ts`
+
 `banner.ts` is used to create a banner at the beginning of the output file
 
 `rollup_plugins.ts` is used to define common plugins for rollup configurations
