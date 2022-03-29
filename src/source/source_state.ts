@@ -27,19 +27,26 @@ class SourceFeatureState {
     }
 
     updateStates(sourceLayer: string, newStates: any) {
-        if(!(sourceLayer in this.stateChanges)){
+        if (!(sourceLayer in this.state)) {
             this.stateChanges[sourceLayer] = {}
-        }else{
-            if(!(sourceLayer in this.deletedStates)){
-                this.deletedStates[sourceLayer] = {}
-            }
-            Object.keys(newStates).forEach(featID=>{
-                if(featID in this.stateChanges[sourceLayer]){
-                    this.deletedStates[sourceLayer][featID]=null
-                }
-            })
         }
         this.stateChanges[sourceLayer] = newStates;
+
+        this.deletedStates[sourceLayer] = this.deletedStates[sourceLayer] || {};
+
+
+
+
+        // if (!(sourceLayer in this.deletedStates)) {
+        //     this.deletedStates[sourceLayer] = {}
+        // }
+        // Object.keys(newStates).forEach(featID => {
+        //     console.log('setremove', featID, this.deletedStates[sourceLayer])
+        //     if (featID in this.stateChanges[sourceLayer]) {
+        //         this.deletedStates[sourceLayer][featID] = null
+        //     }
+        // })
+
     }
 
     updateState(sourceLayer: string, featureId: number | string, newState: any) {
