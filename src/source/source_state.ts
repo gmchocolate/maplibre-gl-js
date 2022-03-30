@@ -27,14 +27,28 @@ class SourceFeatureState {
     }
 
     updateStates(sourceLayer: string, newStates: any) {
-        if (!(sourceLayer in this.state)) {
+        if (!(sourceLayer in this.stateChanges)) {
             this.stateChanges[sourceLayer] = {}
         }
+        if (!(sourceLayer in this.state)) {
+            this.state[sourceLayer] = {}
+        }
+        if (!(sourceLayer in this.deletedStates)) {
+            this.deletedStates[sourceLayer] = {}
+        }
+
         this.stateChanges[sourceLayer] = newStates;
+        const _this = this
+        // Object.keys(newStates).forEach(key=>{
+        //     _this.deletedStates[sourceLayer][key][]=null
+        // })
 
         this.deletedStates[sourceLayer] = this.deletedStates[sourceLayer] || {};
 
-
+        let newStateFeatures = Object.keys(newStates);
+        Object.keys(this.state[sourceLayer]).filter(feature=>!newStateFeatures.includes(feature)).forEach(feature=>{
+            _this.deletedStates[sourceLayer][feature]=null
+        })
 
 
         // if (!(sourceLayer in this.deletedStates)) {
